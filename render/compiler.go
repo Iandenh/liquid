@@ -30,7 +30,8 @@ func (c Config) compileNode(n parser.ASTNode) (Node, parser.Error) {
 
 		cd, ok := c.findBlockDef(n.Name)
 		if !ok {
-			return nil, parser.Errorf(n, "undefined tag %q", n.Name)
+			n.Token.Source = n.Name
+			return &TextNode{Token: n.Token}, nil
 		}
 		node := BlockNode{
 			Token:   n.Token,
@@ -61,7 +62,8 @@ func (c Config) compileNode(n parser.ASTNode) (Node, parser.Error) {
 			}
 			return &TagNode{n.Token, f}, nil
 		}
-		return nil, parser.Errorf(n, "undefined tag %q", n.Name)
+		n.Token.Source = n.Name
+		return &TextNode{Token: n.Token}, nil
 	case *parser.ASTText:
 		return &TextNode{n.Token}, nil
 	case *parser.ASTObject:
