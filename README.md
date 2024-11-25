@@ -1,5 +1,9 @@
 # Liquid Template Parser
 
+---
+This a relax version of the Liquid, this is only useful for my use case. Use the correct thing with normal errors.
+---
+
 [![go badge][go-svg]][go-url]
 [![Golangci-lint badge][golangci-lint-svg]][golangci-lint-url]
 [![Go Report Card badge][go-report-card-svg]][go-report-card-url]

@@ -20,7 +20,7 @@ func Render(node Node, w io.Writer, vars map[string]any, c Config) Error {
 		return err
 	}
 	if _, err := tw.Flush(); err != nil {
-		panic(err)
+		return nil
 	}
 	return nil
 }
@@ -46,11 +46,11 @@ func (n *BlockNode) render(w *trimWriter, ctx nodeContext) Error {
 	cd, ok := ctx.config.findBlockDef(n.Name)
 	if !ok || cd.parser == nil {
 		// this should have been detected during compilation; it's an implementation error if it happens here
-		panic(fmt.Errorf("undefined tag %q", n.Name))
+		return nil
 	}
 	renderer := n.renderer
 	if renderer == nil {
-		panic(fmt.Errorf("unset renderer for %v", n))
+		return nil
 	}
 	err := renderer(w, rendererContext{ctx, nil, n})
 	return wrapRenderError(err, n)
